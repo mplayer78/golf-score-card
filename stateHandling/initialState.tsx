@@ -1,14 +1,16 @@
 export const initialGameState = {
   numberOfHoles: 0,
   currentHole: 0,
+  courseId: "",
+  courseName: "Golfy Golf Golf",
   holes: [],
   totalScore: 0,
   history: [],
   userPar: 0,
   userName: "",
-  userId: ""
+  userId: "",
 };
 
 export const initialUIState = {
-  showConfirmationModal: false
+  showConfirmationModal: false,
 };

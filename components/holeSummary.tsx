@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const HoleSummary = props => {
+const HoleSummary = (props) => {
   console.log("props ", props);
   return (
     <View>

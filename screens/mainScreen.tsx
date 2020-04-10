@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { GameContext } from "../stateHandling/Context";
 import { fetchMe } from "../util/db";
+import CourseSelector from "../components/courseSelector";
+import PlayerSelector from "../components/playerSelector";
 
 const MainScreen = (props) => {
   const { state, dispatch } = useContext(GameContext);
@@ -22,24 +24,26 @@ const MainScreen = (props) => {
   }, []);
   return (
     <View>
+      <Text>Golf Card</Text>
+      <CourseSelector />
+      <PlayerSelector />
       <Button
-        title="9 holes"
+        title="Play"
         onPress={() => {
           dispatch({ type: "start_game", numberOfHoles: 9 });
           props.navigation.navigate("GameScreen");
         }}
       />
       <Button
-        title="18 holes"
+        title="History"
         onPress={() => {
-          dispatch({ type: "start_game", numberOfHoles: 18 });
-          props.navigation.navigate("GameScreen");
+          props.navigation.navigate("ScoreHistory");
         }}
       />
       <Button
-        title="Score History"
+        title="Settings"
         onPress={() => {
-          props.navigation.navigate("ScoreHistory");
+          props.navigation.navigate("Settings");
         }}
       />
     </View>

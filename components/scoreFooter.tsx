@@ -4,9 +4,10 @@ import {
   Text,
   View,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
 } from "react-native";
 import { GameContext, UIContext } from "../stateHandling/Context";
+import colors from "../styles/colors";
 
 const ScoreFooter = () => {
   const { state, dispatch } = useContext(GameContext);
@@ -23,7 +24,7 @@ const ScoreFooter = () => {
           </View>
           <View
             style={{
-              flex: 3
+              flex: 3,
             }}
           >
             <TextInput
@@ -42,7 +43,7 @@ const ScoreFooter = () => {
       >
         <View
           style={{
-            minHeight: 50
+            minHeight: 50,
           }}
         >
           <Text
@@ -51,7 +52,7 @@ const ScoreFooter = () => {
               fontWeight: "800",
               fontSize: 56,
               color: "#4F4F4F",
-              textTransform: "uppercase"
+              textTransform: "uppercase",
             }}
           >
             Finished?
@@ -66,17 +67,17 @@ export default ScoreFooter;
 
 const styles = StyleSheet.create({
   done: {
-    backgroundColor: "#6FCF97"
+    backgroundColor: "#6FCF97",
   },
   notDone: {
-    backgroundColor: "#4F4F4F",
+    backgroundColor: colors.darkGrey,
     width: "100%",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   footer: {
     flex: 1,
     minHeight: 125,
-    padding: 40
+    padding: 40,
   },
   footerText: {
     fontSize: 36,
@@ -84,6 +85,6 @@ const styles = StyleSheet.create({
     color: "white",
     textTransform: "uppercase",
     textAlign: "right",
-    margin: 10
-  }
+    margin: 10,
+  },
 });

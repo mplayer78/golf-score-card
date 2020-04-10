@@ -53,9 +53,18 @@ export function reducer(state, action) {
         ...state,
         history: action.data,
       };
+    case "choose_course":
+      console.log("action.courseId", action.courseId);
+      return {
+        ...state,
+        courseId: action.courseId,
+        courseName: action.courseName,
+        numberOfHoles: action.numberOfHoles,
+      };
     case "no_user":
       return state;
     default:
+      console.log("action", action);
       return state;
   }
 }
