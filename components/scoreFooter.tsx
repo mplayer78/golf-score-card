@@ -6,13 +6,12 @@ import {
   TextInput,
   TouchableHighlight
 } from "react-native";
-import { GameContext } from "../stateHandling/GameContext";
+import { GameContext, UIContext } from "../stateHandling/Context";
 
 const ScoreFooter = () => {
   const { state, dispatch } = useContext(GameContext);
+  const { uiState, uiDispatch } = useContext(UIContext);
   const allComplete: boolean = state.holes.reduce((a, v) => {
-    console.log("v ", v.score > 0);
-    console.log("a ", a);
     return v.score < 1 ? false : a;
   }, true);
   if (!allComplete) {
@@ -38,7 +37,9 @@ const ScoreFooter = () => {
   }
   return (
     <View style={{ ...styles.footer, ...styles.done }}>
-      <TouchableHighlight>
+      <TouchableHighlight
+        onPress={() => uiDispatch({ type: "show_confirmation_modal" })}
+      >
         <View
           style={{
             minHeight: 50

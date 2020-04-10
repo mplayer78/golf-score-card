@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import GameScreenStyles from "../styles/gameScreenStyles";
 import HoleText from "./holeText";
-import { GameContext } from "../stateHandling/GameContext";
+import { GameContext } from "../stateHandling/Context";
 import { textStyles } from "../styles/textStyles";
 import PlusButton from "../imageComponents/plusButton.js";
 

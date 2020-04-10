@@ -1,21 +1,15 @@
-import React, { useContext } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  SafeAreaView,
-  Modal
-} from "react-native";
+import React, { useContext, useState } from "react";
+import { View, ScrollView } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
-import { GameContext } from "../stateHandling/GameContext";
+import { GameContext } from "../stateHandling/Context";
 import HoleScore from "../components/holeScore";
 import HoleScoreHeader from "../components/holeScoreHeader";
 import ScoreFooter from "../components/scoreFooter";
+import ConfirmationBox from "../components/confirmationBox";
 
-const GameScreen = () => {
+const GameScreen = props => {
   const { state, dispatch } = useContext(GameContext);
-  console.log("state from gamescreen", state);
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
       <HoleScoreHeader />
@@ -30,11 +24,7 @@ const GameScreen = () => {
           ))}
         </ScrollView>
       </View>
-      <Modal>
-        <View>
-          <Text>Here's a Modal</Text>
-        </View>
-      </Modal>
+      <ConfirmationBox {...props} />
       <ScoreFooter />
     </>
   );

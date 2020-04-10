@@ -1,16 +1,15 @@
 import React, { useState, useReducer, useEffect } from "react";
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import Header from "./screens/header";
-import Footer from "./screens/footer";
+import { StyleSheet } from "react-native";
 import { AppLoading } from "expo";
 import ScreensNavigator from "./navigation/golfNav";
 import { ErrorBoundary } from "./util/ErrorBoundary";
 import { reducer } from "./stateHandling/reducer";
-import { GameContext } from "./stateHandling/GameContext";
-import { initialState } from "./stateHandling/initialState";
+import { uiReducer } from "./stateHandling/uiReducer";
+import { GameContext, UIContext } from "./stateHandling/Context";
+import { initialGameState, initialUIState } from "./stateHandling/initialState";
 import { fetchFonts } from "./util/fetchFonts";
 import * as Font from "expo-font";
-
+import { init } from "./util/db";
 const fetchMyFonts = () => {
   return Font.loadAsync({
     "OpenSans-Regular": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -25,38 +24,41 @@ const fetchMyFonts = () => {
     RobotoMediumItalic: require("./assets/fonts/Roboto-MediumItalic.ttf"),
     RobotoRegular: require("./assets/fonts/Roboto-Regular.ttf"),
     RobotoThin: require("./assets/fonts/Roboto-Thin.ttf"),
-    RobotoThinItalic: require("./assets/fonts/Roboto-ThinItalic.ttf")
+    RobotoThinItalic: require("./assets/fonts/Roboto-ThinItalic.ttf"),
   });
 };
 
+init()
+  .then(() => {
+    console.log("initialised database");
+  })
+  .catch((err) => {
+    console.log("database initialisation failed");
+    console.error(err);
+  });
+
 export default function App() {
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [state, dispatch] = useReducer(reducer, initialState);
-  useEffect(() => {
-    async function getFonts() {
-      return fetchMyFonts();
-    }
-    getFonts().then(result => {
-      setDataLoaded(true);
-    });
-  }, []);
-  if (!dataLoaded) {
-    console.log("data is not loaded");
-    return <AppLoading />;
-  }
-  console.log("data is loaded");
-  console.log(
-    'Font.isLoaded("OpenSans-Regular")',
-    Font.isLoaded("OpenSans-Regular")
-  );
+  const [state, dispatch] = useReducer(reducer, initialGameState);
+  const [uiState, uiDispatch] = useReducer(uiReducer, initialUIState);
+  // useEffect(() => {
+  //   async function getFonts() {
+  //     return fetchMyFonts();
+  //   }
+  //   getFonts().then(result => {
+  //     setDataLoaded(true);
+  //   });
+  // }, []);
+  // if (!dataLoaded) {
+  //   return <AppLoading />;
+  // }
   return (
     <ErrorBoundary>
       <GameContext.Provider value={{ state, dispatch }}>
-        <ScreensNavigator />
+        <UIContext.Provider value={{ uiState, uiDispatch }}>
+          <ScreensNavigator />
+        </UIContext.Provider>
       </GameContext.Provider>
-      {/* <View style={styles.container}>
-        <Text style={styles.text}>Hey from Text</Text>
-      </View> */}
     </ErrorBoundary>
   );
 }
@@ -66,10 +68,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   text: {
     // fontFamily: Font.isLoaded("RobotoMedium") ? "RobotoMedium" : "Helvetica",
-    fontSize: 36
-  }
+    fontSize: 36,
+  },
 });

@@ -1,5 +1,14 @@
-export const initialState = {
+export const initialGameState = {
   numberOfHoles: 0,
   currentHole: 0,
-  holes: []
+  holes: [],
+  totalScore: 0,
+  history: [],
+  userPar: 0,
+  userName: "",
+  userId: ""
+};
+
+export const initialUIState = {
+  showConfirmationModal: false
 };
